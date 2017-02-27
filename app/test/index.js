@@ -63,4 +63,14 @@ describe('post a device', () => {
         done()
       })
   })
+
+  it('Should be deleted', (done) => {
+    request(app)
+      .delete('/devices/1')
+      .expect(200)
+      .end((err, res) => {
+        res.status.should.equal(200)
+        done()
+      })
+  })
 })

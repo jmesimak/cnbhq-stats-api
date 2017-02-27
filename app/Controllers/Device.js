@@ -36,6 +36,13 @@ class DeviceController {
       device.saveDevice(this.knex)
         .then((row) => res.send({id: row[0]}))
     })
+
+    app.delete('/devices/:id', (req, res) => {
+      Device
+        .findOne(this.knex, req.params.id)
+        .then((device) => device.remove(this.knex))
+        .then(() => res.send({status: 'rockin it'}))
+    })
   }
 
 }

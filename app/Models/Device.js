@@ -39,11 +39,26 @@ class Device {
       knex('device_readings')
         .where({device_id: this.id})
         .select('id', 'reading_data', 'created_at')
+        .limit(100)
         .then((rows) => {
           this.readings = rows
           resolve(this)
         })
         .catch(console.log)
+    })
+  }
+
+  remove(knex) {
+    return new Promise((resolve, reject) => {
+      knex('device_readings')
+        .where('device_id', this.id)
+        .del()
+        .then(() => {
+          knex('devices')
+            .where('id', this.id)
+            .del()
+            .then(resolve)
+        })
     })
   }
 
